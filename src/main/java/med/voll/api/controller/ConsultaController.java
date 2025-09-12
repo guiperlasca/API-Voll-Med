@@ -19,11 +19,11 @@ public class ConsultaController {
     @Autowired
     private AgendaDeConsultas agenda;
 
-        @PostMapping
-        @Transactional
-        public ResponseEntity agendar(@RequestBody @Valid DadosAgendamentoConsulta dados) {
-            agenda.agendar(dados);
-            return ResponseEntity.ok(new DadosDetalhamentoConsulta(null, null, null, null));
-        }
+    @PostMapping
+    @Transactional
+    public ResponseEntity agendar(@RequestBody @Valid DadosAgendamentoConsulta dados) {
+        var consulta = agenda.agendar(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoConsulta(consulta.getId(), consulta.getMedico().getId(), consulta.getPaciente().getId(), consulta.getData()));
+    }
 
 }
