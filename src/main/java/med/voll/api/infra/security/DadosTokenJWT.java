@@ -1,6 +1,4 @@
 package med.voll.api.infra.security;
 
-public class DadosTokenJWT {
-    public DadosTokenJWT(String token) {
-    }
+public record DadosTokenJWT(String token) {
 }
