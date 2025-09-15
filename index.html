@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voll.med - Gestão Médica</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #00d4aa;
+            --primary-dark: #00b894;
+            --secondary-color: #6c5ce7;
+            --accent-color: #fd79a8;
+            --dark-bg: #2d3436;
+            --light-bg: #ffffff;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --border-color: #ddd;
+            --success-color: #00b894;
+            --error-color: #e17055;
+            --warning-color: #fdcb6e;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15);
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Login Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--light-bg);
+            padding: 60px 40px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo p {
+            color: var(--text-light);
+            margin-top: 8px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+            background: white;
+        }
+
+        .btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+        }
+
+        .btn-danger {
+            background: var(--error-color);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+            width: auto;
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: var(--light-bg);
+            padding: 20px 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 30px;
+            background: var(--light-bg);
+            padding: 8px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-tab.active {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: rgba(0, 212, 170, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .card {
+            background: var(--light-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--light-bg);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--light-bg);
+        }
+
+        .table th {
+            background: var(--gradient);
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .table th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        .table th:last-child {
+            border-top-right-radius: 12px;
+        }
+
+        .table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table tr:hover {
+            background: rgba(0, 212, 170, 0.05);
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-success {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--success-color);
+        }
+
+        .badge-danger {
+            background: rgba(225, 112, 85, 0.1);
+            color: var(--error-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--light-bg);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-hover);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(225, 112, 85, 0.1);
+            color: var(--error-color);
+        }
+
+        .alert {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-success {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--success-color);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .alert-error {
+            background: rgba(225, 112, 85, 0.1);
+            color: var(--error-color);
+            border-left: 4px solid var(--error-color);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            border: 2px solid var(--border-color);
+            background: var(--light-bg);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination button:hover,
+        .pagination button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .table-container {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <h1><i class="fas fa-heartbeat"></i> Voll.med</h1>
+                <p>Sistema de Gestão Médica</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="login">Usuário</label>
+                    <input type="text" id="login" name="login" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required>
+                </div>
+                <button type="submit" class="btn">
+                    <span class="btn-text">Entrar</span>
+                    <div class="loading" style="display: none;"></div>
+                </button>
+            </form>
+            <div id="loginError" class="alert alert-error" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <div class="container">
+            <header class="header">
+                <h1><i class="fas fa-heartbeat"></i> Voll.med</h1>
+                <div class="user-menu">
+                    <div class="user-info">
+                        <div class="avatar">U</div>
+                        <span>Usuário Logado</span>
+                    </div>
+                    <button class="btn btn-danger btn-small" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-user-md"></i></div>
+                    <div class="stat-number" id="totalMedicos">0</div>
+                    <div class="stat-label">Médicos Ativos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-number" id="totalPacientes">0</div>
+                    <div class="stat-label">Pacientes Ativos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-number" id="totalConsultas">0</div>
+                    <div class="stat-label">Consultas Agendadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    <div class="stat-number" id="consultasHoje">0</div>
+                    <div class="stat-label">Consultas Hoje</div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('medicos')">
+                    <i class="fas fa-user-md"></i> Médicos
+                </button>
+                <button class="nav-tab" onclick="showTab('pacientes')">
+                    <i class="fas fa-users"></i> Pacientes
+                </button>
+                <button class="nav-tab" onclick="showTab('consultas')">
+                    <i class="fas fa-calendar-check"></i> Consultas
+                </button>
+            </div>
+
+            <!-- Médicos Tab -->
+            <div id="medicosTab" class="tab-content active">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2><i class="fas fa-user-md"></i> Gerenciar Médicos</h2>
+                        <button class="btn btn-secondary btn-small" onclick="openModal('medicoModal')">
+                            <i class="fas fa-plus"></i> Novo Médico
+                        </button>
+                    </div>
+
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Buscar médicos..." id="searchMedicos">
+                        <button class="btn btn-small" onclick="loadMedicos()">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CRM</th>
+                                    <th>Especialidade</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="medicosTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 40px;">
+                                        <div class="loading"></div>
+                                        <p style="margin-top: 10px;">Carregando médicos...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="medicosPagination" class="pagination"></div>
+                </div>
+            </div>
+
+            <!-- Pacientes Tab -->
+            <div id="pacientesTab" class="tab-content">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2><i class="fas fa-users"></i> Gerenciar Pacientes</h2>
+                        <button class="btn btn-secondary btn-small" onclick="openModal('pacienteModal')">
+                            <i class="fas fa-plus"></i> Novo Paciente
+                        </button>
+                    </div>
+
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Buscar pacientes..." id="searchPacientes">
+                        <button class="btn btn-small" onclick="loadPacientes()">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pacientesTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 40px;">
+                                        <div class="loading"></div>
+                                        <p style="margin-top: 10px;">Carregando pacientes...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="pacientesPagination" class="pagination"></div>
+                </div>
+            </div>
+
+            <!-- Consultas Tab -->
+            <div id="consultasTab" class="tab-content">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2><i class="fas fa-calendar-check"></i> Gerenciar Consultas</h2>
+                        <button class="btn btn-secondary btn-small" onclick="openModal('consultaModal')">
+                            <i class="fas fa-plus"></i> Nova Consulta
+                        </button>
+                    </div>
+
+                    <div class="search-bar">
+                        <input type="date" class="search-input" id="searchConsultas" value="">
+                        <button class="btn btn-small" onclick="loadConsultas()">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Data/Hora</th>
+                                    <th>Médico</th>
+                                    <th>Paciente</th>
+                                    <th>Especialidade</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="consultasTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 40px;">
+                                        <div class="loading"></div>
+                                        <p style="margin-top: 10px;">Carregando consultas...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="consultasPagination" class="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Médico -->
+    <div id="medicoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Cadastrar/Editar Médico</h3>
+                <button class="close-btn" onclick="closeModal('medicoModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="medicoForm">
+                <input type="hidden" id="medicoId" name="id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="medicoNome">Nome *</label>
+                        <input type="text" id="medicoNome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicoEmail">Email *</label>
+                        <input type="email" id="medicoEmail" name="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="medicoTelefone">Telefone *</label>
+                        <input type="tel" id="medicoTelefone" name="telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicoCrm">CRM *</label>
+                        <input type="text" id="medicoCrm" name="crm" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="medicoEspecialidade">Especialidade *</label>
+                    <select id="medicoEspecialidade" name="especialidade" required>
+                        <option value="">Selecione uma especialidade</option>
+                        <option value="ORTOPEDIA">Ortopedia</option>
+                        <option value="CARDIOLOGIA">Cardiologia</option>
+                        <option value="GINECOLOGIA">Ginecologia</option>
+                        <option value="DERMATOLOGIA">Dermatologia</option>
+                    </select>
+                </div>
+                <h4 style="margin: 20px 0 10px 0; color: var(--text-dark);">Endereço</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="medicoLogradouro">Logradouro *</label>
+                        <input type="text" id="medicoLogradouro" name="logradouro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicoBairro">Bairro *</label>
+                        <input type="text" id="medicoBairro" name="bairro" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="medicoCep">CEP *</label>
+                        <input type="text" id="medicoCep" name="cep" required pattern="[0-9]{8}" placeholder="00000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="medicoNumero">Número</label>
+                        <input type="text" id="medicoNumero" name="numero">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="medicoCidade">Cidade *</label>
+                        <input type="text" id="medicoCidade" name="cidade" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="medicoUf">UF *</label>
+                        <select id="medicoUf" name="uf" required>
+                            <option value="">Selecione</option>
+                            <option value="AC">AC</option>
+                            <option value="AL">AL</option>
+                            <option value="AP">AP</option>
+                            <option value="AM">AM</option>
+                            <option value="BA">BA</option>
+                            <option value="CE">CE</option>
+                            <option value="DF">DF</option>
+                            <option value="ES">ES</option>
+                            <option value="GO">GO</option>
+                            <option value="MA">MA</option>
+                            <option value="MT">MT</option>
+                            <option value="MS">MS</option>
+                            <option value="MG">MG</option>
+                            <option value="PA">PA</option>
+                            <option value="PB">PB</option>
+                            <option value="PR">PR</option>
+                            <option value="PE">PE</option>
+                            <option value="PI">PI</option>
+                            <option value="RJ">RJ</option>
+                            <option value="RN">RN</option>
+                            <option value="RS">RS</option>
+                            <option value="RO">RO</option>
+                            <option value="RR">RR</option>
+                            <option value="SC">SC</option>
+                            <option value="SP">SP</option>
+                            <option value="SE">SE</option>
+                            <option value="TO">TO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="medicoComplemento">Complemento</label>
+                    <input type="text" id="medicoComplemento" name="complemento">
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 30px;">
+                    <button type="submit" class="btn" style="flex: 1;">
+                        <span class="btn-text">Salvar</span>
+                        <div class="loading" style="display: none;"></div>
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('medicoModal')" style="flex: 1;">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Paciente -->
+    <div id="pacienteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Cadastrar/Editar Paciente</h3>
+                <button class="close-btn" onclick="closeModal('pacienteModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="pacienteForm">
+                <input type="hidden" id="pacienteId" name="id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pacienteNome">Nome *</label>
+                        <input type="text" id="pacienteNome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteEmail">Email *</label>
+                        <input type="email" id="pacienteEmail" name="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pacienteTelefone">Telefone *</label>
+                        <input type="tel" id="pacienteTelefone" name="telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteCpf">CPF *</label>
+                        <input type="text" id="pacienteCpf" name="cpf" required pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}" placeholder="000.000.000-00">
+                    </div>
+                </div>
+                <h4 style="margin: 20px 0 10px 0; color: var(--text-dark);">Endereço</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pacienteLogradouro">Logradouro *</label>
+                        <input type="text" id="pacienteLogradouro" name="logradouro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteBairro">Bairro *</label>
+                        <input type="text" id="pacienteBairro" name="bairro" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pacienteCep">CEP *</label>
+                        <input type="text" id="pacienteCep" name="cep" required pattern="[0-9]{8}" placeholder="00000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteNumero">Número</label>
+                        <input type="text" id="pacienteNumero" name="numero">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pacienteCidade">Cidade *</label>
+                        <input type="text" id="pacienteCidade" name="cidade" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pacienteUf">UF *</label>
+                        <select id="pacienteUf" name="uf" required>
+                            <option value="">Selecione</option>
+                            <option value="AC">AC</option>
+                            <option value="AL">AL</option>
+                            <option value="AP">AP</option>
+                            <option value="AM">AM</option>
+                            <option value="BA">BA</option>
+                            <option value="CE">CE</option>
+                            <option value="DF">DF</option>
+                            <option value="ES">ES</option>
+                            <option value="GO">GO</option>
+                            <option value="MA">MA</option>
+                            <option value="MT">MT</option>
+                            <option value="MS">MS</option>
+                            <option value="MG">MG</option>
+                            <option value="PA">PA</option>
+                            <option value="PB">PB</option>
+                            <option value="PR">PR</option>
+                            <option value="PE">PE</option>
+                            <option value="PI">PI</option>
+                            <option value="RJ">RJ</option>
+                            <option value="RN">RN</option>
+                            <option value="RS">RS</option>
+                            <option value="RO">RO</option>
+                            <option value="RR">RR</option>
+                            <option value="SC">SC</option>
+                            <option value="SP">SP</option>
+                            <option value="SE">SE</option>
+                            <option value="TO">TO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pacienteComplemento">Complemento</label>
+                    <input type="text" id="pacienteComplemento" name="complemento">
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 30px;">
+                    <button type="submit" class="btn" style="flex: 1;">
+                        <span class="btn-text">Salvar</span>
+                        <div class="loading" style="display: none;"></div>
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('pacienteModal')" style="flex: 1;">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Consulta -->
+    <div id="consultaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Agendar Consulta</h3>
+                <button class="close-btn" onclick="closeModal('consultaModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="consultaForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="consultaPaciente">Paciente *</label>
+                        <select id="consultaPaciente" name="idPaciente" required>
+                            <option value="">Selecione um paciente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="consultaEspecialidade">Especialidade *</label>
+                        <select id="consultaEspecialidade" name="especialidade" required>
+                            <option value="">Selecione uma especialidade</option>
+                            <option value="ORTOPEDIA">Ortopedia</option>
+                            <option value="CARDIOLOGIA">Cardiologia</option>
+                            <option value="GINECOLOGIA">Ginecologia</option>
+                            <option value="DERMATOLOGIA">Dermatologia</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="consultaMedico">Médico (opcional)</label>
+                        <select id="consultaMedico" name="idMedico">
+                            <option value="">Sistema escolherá automaticamente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="consultaData">Data e Hora *</label>
+                        <input type="datetime-local" id="consultaData" name="data" required>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 30px;">
+                    <button type="submit" class="btn" style="flex: 1;">
+                        <span class="btn-text">Agendar</span>
+                        <div class="loading" style="display: none;"></div>
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('consultaModal')" style="flex: 1;">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Alert Messages -->
+    <div id="alertContainer" style="position: fixed; top: 20px; right: 20px; z-index: 1001; max-width: 400px;"></div>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8080';
+        let authToken = localStorage.getItem('authToken');
+        let currentPage = {
+            medicos: 0,
+            pacientes: 0,
+            consultas: 0
+        };
+
+        // Utility Functions
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.style.marginBottom = '10px';
+            alertDiv.style.animation = 'slideIn 0.3s ease-out';
+
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            alertDiv.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; margin-left: auto; cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            alertContainer.appendChild(alertDiv);
+
+            setTimeout(() => {
+                if (alertDiv.parentElement) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function formatCPF(cpf) {
+            return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+
+        function updatePagination(entityName, pageData) {
+            const paginationContainer = document.getElementById(`${entityName}Pagination`);
+            if (!paginationContainer) return;
+
+            paginationContainer.innerHTML = '';
+
+            const { totalPages, number: currentPageNumber, first, last } = pageData;
+
+            if (totalPages <= 1) {
+                return; // No need for pagination
+            }
+
+            const entityCamelCase = entityName.charAt(0).toUpperCase() + entityName.slice(1);
+            const loadFunction = window[`load${entityCamelCase}`];
+
+            // Previous button
+            if (!first) {
+                const prevButton = document.createElement('button');
+                prevButton.innerHTML = '&laquo; Anterior';
+                prevButton.onclick = () => loadFunction(currentPageNumber - 1);
+                paginationContainer.appendChild(prevButton);
+            }
+
+            // Page number buttons
+            const pagesToShow = new Set();
+            pagesToShow.add(0); // always show first page
+            if (totalPages > 1) {
+                pagesToShow.add(totalPages - 1); // always show last page
+            }
+
+            for (let i = Math.max(1, currentPageNumber - 1); i <= Math.min(totalPages - 2, currentPageNumber + 1); i++) {
+                pagesToShow.add(i);
+            }
+
+            const sortedPages = Array.from(pagesToShow).sort((a, b) => a - b);
+
+            let lastPage = -1;
+            for (const page of sortedPages) {
+                if (lastPage !== -1 && page > lastPage + 1) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.textContent = '...';
+                    ellipsis.style.padding = '8px 12px';
+                    paginationContainer.appendChild(ellipsis);
+                }
+
+                const pageButton = document.createElement('button');
+                pageButton.textContent = page + 1;
+                if (page === currentPageNumber) {
+                    pageButton.classList.add('active');
+                }
+                pageButton.onclick = (e) => {
+                    e.preventDefault();
+                    loadFunction(page);
+                };
+                paginationContainer.appendChild(pageButton);
+
+                lastPage = page;
+            }
+
+            // Next button
+            if (!last) {
+                const nextButton = document.createElement('button');
+                nextButton.innerHTML = 'Próximo &raquo;';
+                nextButton.onclick = () => loadFunction(currentPageNumber + 1);
+                paginationContainer.appendChild(nextButton);
+            }
+        }
+
+        // API Functions
+        async function makeRequest(endpoint, options = {}) {
+            const url = `${API_BASE_URL}${endpoint}`;
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(authToken && { 'Authorization': `Bearer ${authToken}` })
+                }
+            };
+
+            const requestOptions = {
+                ...defaultOptions,
+                ...options,
+                headers: {
+                    ...defaultOptions.headers,
+                    ...options.headers
+                }
+            };
+
+            try {
+                const response = await fetch(url, requestOptions);
+
+                if (response.status === 401) {
+                    logout();
+                    throw new Error('Sessão expirada');
+                }
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText || `HTTP error! status: ${response.status}`);
+                }
+
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    return await response.json();
+                }
+
+                return null;
+            } catch (error) {
+                console.error('Request failed:', error);
+                throw error;
+            }
+        }
+
+        // Authentication
+        async function login(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const loginData = {
+                login: formData.get('login'),
+                senha: formData.get('senha')
+            };
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loading = submitBtn.querySelector('.loading');
+
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+
+            try {
+                const response = await makeRequest('/login', {
+                    method: 'POST',
+                    body: JSON.stringify(loginData)
+                });
+
+                authToken = response.token;
+                localStorage.setItem('authToken', authToken);
+
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+
+                await loadDashboardData();
+                showAlert('Login realizado com sucesso!');
+
+            } catch (error) {
+                const errorDiv = document.getElementById('loginError');
+                errorDiv.querySelector('span').textContent = 'Credenciais inválidas. Tente novamente.';
+                errorDiv.style.display = 'flex';
+            } finally {
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+            }
+        }
+
+        function logout() {
+            authToken = null;
+            localStorage.removeItem('authToken');
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('loginError').style.display = 'none';
+        }
+
+        // Dashboard Functions
+        async function loadDashboardData() {
+            try {
+                await Promise.all([
+                    loadMedicos(),
+                    loadPacientes(),
+                    loadConsultas()
+                ]);
+                updateStats();
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        async function updateStats() {
+            try {
+                // Simular estatísticas baseadas nos dados carregados
+                const medicosTable = document.getElementById('medicosTableBody');
+                const pacientesTable = document.getElementById('pacientesTableBody');
+                const consultasTable = document.getElementById('consultasTableBody');
+
+                const totalMedicos = medicosTable.querySelectorAll('tr:not([data-empty])').length;
+                const totalPacientes = pacientesTable.querySelectorAll('tr:not([data-empty])').length;
+                const totalConsultas = consultasTable.querySelectorAll('tr:not([data-empty])').length;
+
+                document.getElementById('totalMedicos').textContent = totalMedicos;
+                document.getElementById('totalPacientes').textContent = totalPacientes;
+                document.getElementById('totalConsultas').textContent = totalConsultas;
+                document.getElementById('consultasHoje').textContent = Math.floor(totalConsultas * 0.3);
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        // Tab Functions
+        function showTab(tabName) {
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + 'Tab').classList.add('active');
+
+            // Load data for the active tab
+            switch(tabName) {
+                case 'medicos':
+                    loadMedicos();
+                    break;
+                case 'pacientes':
+                    loadPacientes();
+                    break;
+                case 'consultas':
+                    loadConsultas();
+                    loadConsultaSelects();
+                    break;
+            }
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+
+            // Reset form if it exists
+            const form = modal.querySelector('form');
+            if (form) {
+                form.reset();
+                const hiddenId = form.querySelector('input[type="hidden"]');
+                if (hiddenId) hiddenId.value = '';
+            }
+
+            // Load select data for consultation modal
+            if (modalId === 'consultaModal') {
+                loadConsultaSelects();
+
+                // Set minimum date to now + 30 minutes
+                const now = new Date();
+                now.setMinutes(now.getMinutes() + 30);
+                const minDateTime = now.toISOString().slice(0, 16);
+                document.getElementById('consultaData').min = minDateTime;
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Médicos Functions
+        async function loadMedicos(page = 0) {
+            currentPage.medicos = page;
+            const tableBody = document.getElementById('medicosTableBody');
+            const searchTerm = document.getElementById('searchMedicos').value;
+            let url = `/medicos?page=${page}&size=10`;
+            if (searchTerm) {
+                url += `&nome=${encodeURIComponent(searchTerm)}`;
+            }
+
+            try {
+                const response = await makeRequest(url);
+
+                if (!response.content || response.content.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr data-empty>
+                            <td colspan="6" style="text-align: center; padding: 40px;">
+                                <i class="fas fa-user-md" style="font-size: 3rem; color: var(--text-light); margin-bottom: 10px;"></i>
+                                <p>Nenhum médico cadastrado</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tableBody.innerHTML = response.content.map(medico => `
+                    <tr>
+                        <td>${medico.nome}</td>
+                        <td>${medico.crm}</td>
+                        <td>${medico.especialidade}</td>
+                        <td>${medico.email}</td>
+                        <td>
+                            <span class="badge badge-success">
+                                <i class="fas fa-check"></i> Ativo
+                            </span>
+                        </td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary btn-small" onclick="editMedico(${medico.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteMedico(${medico.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                updatePagination('medicos', response);
+                updateStats();
+
+            } catch (error) {
+                console.error('Error loading médicos:', error);
+                tableBody.innerHTML = `
+                    <tr data-empty>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: var(--error-color);">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <p>Erro ao carregar médicos</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        async function saveMedico(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const medicoId = formData.get('id');
+
+            const medicoData = {
+                nome: formData.get('nome'),
+                email: formData.get('email'),
+                telefone: formData.get('telefone'),
+                crm: formData.get('crm'),
+                especialidade: formData.get('especialidade'),
+                endereco: {
+                    logradouro: formData.get('logradouro'),
+                    bairro: formData.get('bairro'),
+                    cep: formData.get('cep'),
+                    numero: formData.get('numero'),
+                    cidade: formData.get('cidade'),
+                    uf: formData.get('uf'),
+                    complemento: formData.get('complemento')
+                }
+            };
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loading = submitBtn.querySelector('.loading');
+
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+
+            try {
+                if (medicoId) {
+                    // Update
+                    medicoData.id = parseInt(medicoId);
+                    await makeRequest('/medicos', {
+                        method: 'PUT',
+                        body: JSON.stringify(medicoData)
+                    });
+                    showAlert('Médico atualizado com sucesso!');
+                } else {
+                    // Create
+                    await makeRequest('/medicos', {
+                        method: 'POST',
+                        body: JSON.stringify(medicoData)
+                    });
+                    showAlert('Médico cadastrado com sucesso!');
+                }
+
+                closeModal('medicoModal');
+                await loadMedicos();
+
+            } catch (error) {
+                console.error('Error saving médico:', error);
+                showAlert('Erro ao salvar médico: ' + error.message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+            }
+        }
+
+        async function editMedico(id) {
+            try {
+                const medico = await makeRequest(`/medicos/${id}`);
+
+                document.getElementById('medicoId').value = medico.id;
+                document.getElementById('medicoNome').value = medico.nome;
+                document.getElementById('medicoEmail').value = medico.email;
+                document.getElementById('medicoTelefone').value = medico.telefone;
+                document.getElementById('medicoCrm').value = medico.crm;
+                document.getElementById('medicoEspecialidade').value = medico.especialidade;
+
+                if (medico.endereco) {
+                    document.getElementById('medicoLogradouro').value = medico.endereco.logradouro || '';
+                    document.getElementById('medicoBairro').value = medico.endereco.bairro || '';
+                    document.getElementById('medicoCep').value = medico.endereco.cep || '';
+                    document.getElementById('medicoNumero').value = medico.endereco.numero || '';
+                    document.getElementById('medicoCidade').value = medico.endereco.cidade || '';
+                    document.getElementById('medicoUf').value = medico.endereco.uf || '';
+                    document.getElementById('medicoComplemento').value = medico.endereco.complemento || '';
+                }
+
+                openModal('medicoModal');
+
+            } catch (error) {
+                console.error('Error loading médico:', error);
+                showAlert('Erro ao carregar dados do médico', 'error');
+            }
+        }
+
+        async function deleteMedico(id) {
+            if (!confirm('Tem certeza que deseja excluir este médico?')) {
+                return;
+            }
+
+            try {
+                await makeRequest(`/medicos/${id}`, {
+                    method: 'DELETE'
+                });
+
+                showAlert('Médico excluído com sucesso!');
+                await loadMedicos();
+
+            } catch (error) {
+                console.error('Error deleting médico:', error);
+                showAlert('Erro ao excluir médico: ' + error.message, 'error');
+            }
+        }
+
+        // Pacientes Functions
+        async function loadPacientes(page = 0) {
+            currentPage.pacientes = page;
+            const tableBody = document.getElementById('pacientesTableBody');
+            const searchTerm = document.getElementById('searchPacientes').value;
+            let url = `/pacientes?page=${page}&size=10`;
+            if (searchTerm) {
+                url += `&nome=${encodeURIComponent(searchTerm)}`;
+            }
+
+            try {
+                const response = await makeRequest(url);
+
+                if (!response.content || response.content.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr data-empty>
+                            <td colspan="6" style="text-align: center; padding: 40px;">
+                                <i class="fas fa-users" style="font-size: 3rem; color: var(--text-light); margin-bottom: 10px;"></i>
+                                <p>Nenhum paciente cadastrado</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tableBody.innerHTML = response.content.map(paciente => `
+                    <tr>
+                        <td>${paciente.nome}</td>
+                        <td>${formatCPF(paciente.cpf)}</td>
+                        <td>${paciente.email}</td>
+                        <td>${paciente.telefone || 'N/A'}</td>
+                        <td>
+                            <span class="badge badge-success">
+                                <i class="fas fa-check"></i> Ativo
+                            </span>
+                        </td>
+                        <td class="action-buttons">
+                            <button class="btn btn-secondary btn-small" onclick="editPaciente(${paciente.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deletePaciente(${paciente.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+                updatePagination('pacientes', response);
+                updateStats();
+
+            } catch (error) {
+                console.error('Error loading pacientes:', error);
+                tableBody.innerHTML = `
+                    <tr data-empty>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: var(--error-color);">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <p>Erro ao carregar pacientes</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        async function savePaciente(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const pacienteId = formData.get('id');
+
+            const pacienteData = {
+                nome: formData.get('nome'),
+                email: formData.get('email'),
+                telefone: (formData.get('telefone') || '').replace(/\D/g, ''),
+                cpf: (formData.get('cpf') || '').replace(/\D/g, ''),
+                endereco: {
+                    logradouro: formData.get('logradouro'),
+                    bairro: formData.get('bairro'),
+                    cep: (formData.get('cep') || '').replace(/\D/g, ''),
+                    numero: formData.get('numero'),
+                    cidade: formData.get('cidade'),
+                    uf: formData.get('uf'),
+                    complemento: formData.get('complemento')
+                }
+            };
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loading = submitBtn.querySelector('.loading');
+
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+
+            try {
+                if (pacienteId) {
+                    // Update
+                    pacienteData.id = parseInt(pacienteId);
+                    await makeRequest('/pacientes', {
+                        method: 'PUT',
+                        body: JSON.stringify(pacienteData)
+                    });
+                    showAlert('Paciente atualizado com sucesso!');
+                } else {
+                    // Create
+                    await makeRequest('/pacientes', {
+                        method: 'POST',
+                        body: JSON.stringify(pacienteData)
+                    });
+                    showAlert('Paciente cadastrado com sucesso!');
+                }
+
+                closeModal('pacienteModal');
+                await loadPacientes(currentPage.pacientes);
+
+            } catch (error) {
+                console.error('Error saving paciente:', error);
+                showAlert('Erro ao salvar paciente: ' + error.message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+            }
+        }
+
+        async function editPaciente(id) {
+            try {
+                const paciente = await makeRequest(`/pacientes/${id}`);
+
+                document.getElementById('pacienteId').value = paciente.id;
+                document.getElementById('pacienteNome').value = paciente.nome;
+                document.getElementById('pacienteEmail').value = paciente.email;
+                document.getElementById('pacienteTelefone').value = paciente.telefone;
+                document.getElementById('pacienteCpf').value = paciente.cpf ? formatCPF(paciente.cpf) : '';
+
+                if (paciente.endereco) {
+                    document.getElementById('pacienteLogradouro').value = paciente.endereco.logradouro || '';
+                    document.getElementById('pacienteBairro').value = paciente.endereco.bairro || '';
+                    document.getElementById('pacienteCep').value = paciente.endereco.cep || '';
+                    document.getElementById('pacienteNumero').value = paciente.endereco.numero || '';
+                    document.getElementById('pacienteCidade').value = paciente.endereco.cidade || '';
+                    document.getElementById('pacienteUf').value = paciente.endereco.uf || '';
+                    document.getElementById('pacienteComplemento').value = paciente.endereco.complemento || '';
+                }
+
+                openModal('pacienteModal');
+
+            } catch (error) {
+                console.error('Error loading paciente:', error);
+                showAlert('Erro ao carregar dados do paciente.', 'error');
+            }
+        }
+
+        async function deletePaciente(id) {
+            if (!confirm('Tem certeza que deseja excluir este paciente?')) {
+                return;
+            }
+
+            try {
+                await makeRequest(`/pacientes/${id}`, {
+                    method: 'DELETE'
+                });
+
+                showAlert('Paciente excluído com sucesso!');
+                await loadPacientes();
+
+            } catch (error) {
+                console.error('Error deleting paciente:', error);
+                showAlert('Erro ao excluir paciente: ' + error.message, 'error');
+            }
+        }
+
+        // Consultas Functions
+        async function saveConsulta(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            const consultaData = {
+                idPaciente: formData.get('idPaciente'),
+                idMedico: formData.get('idMedico') || null, // Send null if empty
+                especialidade: formData.get('especialidade'),
+                data: new Date(formData.get('data')).toISOString()
+            };
+
+            // Remove idMedico if it's null and an especialidade is provided
+            if (!consultaData.idMedico && consultaData.especialidade) {
+                delete consultaData.idMedico;
+            }
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loading = submitBtn.querySelector('.loading');
+
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+
+            try {
+                await makeRequest('/consultas', {
+                    method: 'POST',
+                    body: JSON.stringify(consultaData)
+                });
+                showAlert('Consulta agendada com sucesso!');
+
+                closeModal('consultaModal');
+                await loadConsultas();
+                await updateStats();
+
+            } catch (error) {
+                console.error('Error scheduling consulta:', error);
+                showAlert('Erro ao agendar consulta: ' + error.message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+            }
+        }
+
+        async function loadConsultas(page = 0) {
+            currentPage.consultas = page;
+            const tableBody = document.getElementById('consultasTableBody');
+            const searchDate = document.getElementById('searchConsultas').value;
+            let url = `/consultas?page=${page}&size=10`;
+            if (searchDate) {
+                // Adjust date to local timezone before sending
+                const localDate = new Date(searchDate);
+                const timezoneOffset = localDate.getTimezoneOffset() * 60000;
+                const adjustedDate = new Date(localDate.getTime() - timezoneOffset);
+                url += `&data=${adjustedDate.toISOString().split('T')[0]}`;
+            }
+
+            try {
+                const response = await makeRequest(url);
+
+                if (!response.content || response.content.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr data-empty>
+                            <td colspan="6" style="text-align: center; padding: 40px;">
+                                <i class="fas fa-calendar-alt" style="font-size: 3rem; color: var(--text-light); margin-bottom: 10px;"></i>
+                                <p>Nenhuma consulta encontrada para os critérios selecionados.</p>
+                            </td>
+                        </tr>
+                    `;
+                    document.getElementById('consultasPagination').innerHTML = '';
+                    return;
+                }
+
+                tableBody.innerHTML = response.content.map(consulta => `
+                    <tr>
+                        <td>${formatDate(consulta.data)}</td>
+                        <td>${consulta.nomeMedico || 'N/A'}</td>
+                        <td>${consulta.nomePaciente || 'N/A'}</td>
+                        <td>${consulta.especialidade || 'N/A'}</td>
+                        <td>
+                            <span class="badge ${consulta.motivoCancelamento ? 'badge-danger' : 'badge-success'}">
+                                <i class="fas ${consulta.motivoCancelamento ? 'fa-times-circle' : 'fa-check-circle'}"></i>
+                                ${consulta.motivoCancelamento ? 'Cancelada' : 'Agendada'}
+                            </span>
+                        </td>
+                        <td class="action-buttons">
+                            ${!consulta.motivoCancelamento ?
+                            `<button class="btn btn-danger btn-small" onclick="cancelarConsulta(${consulta.id})">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>` : ''
+                            }
+                        </td>
+                    </tr>
+                `).join('');
+
+                updatePagination('consultas', response);
+                updateStats();
+
+            } catch (error) {
+                console.error('Error loading consultas:', error);
+                tableBody.innerHTML = `
+                    <tr data-empty>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: var(--error-color);">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <p>Erro ao carregar consultas</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        async function cancelarConsulta(id) {
+            const motivo = prompt("Por favor, informe o motivo do cancelamento:");
+            if (!motivo) {
+                showAlert('O cancelamento foi abortado pois o motivo não foi informado.', 'warning');
+                return;
+            }
+
+            try {
+                await makeRequest(`/consultas`, {
+                    method: 'DELETE',
+                    body: JSON.stringify({ idConsulta: id, motivo: motivo })
+                });
+
+                showAlert('Consulta cancelada com sucesso!');
+                await loadConsultas(currentPage.consultas);
+                await updateStats();
+
+            } catch (error) {
+                console.error('Error canceling consulta:', error);
+                showAlert('Erro ao cancelar consulta: ' + error.message, 'error');
+            }
+        }
+
+        async function loadConsultaSelects() {
+            try {
+                // Load pacientes for consultation
+                const pacientesResponse = await makeRequest('/pacientes?size=100');
+                const pacienteSelect = document.getElementById('consultaPaciente');
+
+                pacienteSelect.innerHTML = '<option value="">Selecione um paciente</option>';
+                if (pacientesResponse.content) {
+                    pacientesResponse.content.forEach(paciente => {
+                        const option = new Option(`${paciente.nome} (${paciente.cpf ? formatCPF(paciente.cpf) : ''})`, paciente.id);
+                        pacienteSelect.add(option);
+                    });
+                }
+
+                // Load medicos for consultation
+                const medicosResponse = await makeRequest('/medicos?size=100');
+                const medicoSelect = document.getElementById('consultaMedico');
+
+                medicoSelect.innerHTML = '<option value="">Sistema escolherá automaticamente</option>';
+                if (medicosResponse.content) {
+                    medicosResponse.content.forEach(medico => {
+                        const option = new Option(`${medico.nome} (${medico.especialidade})`, medico.id);
+                        medicoSelect.add(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading data for selects:', error);
+                showAlert('Erro ao carregar dados para agendamento.', 'error');
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for token on load
+            authToken = localStorage.getItem('authToken');
+            if (authToken) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+                loadDashboardData();
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('dashboard').classList.remove('active');
+            }
+
+            document.getElementById('loginForm').addEventListener('submit', login);
+            document.getElementById('medicoForm').addEventListener('submit', saveMedico);
+            document.getElementById('pacienteForm').addEventListener('submit', savePaciente);
+            document.getElementById('consultaForm').addEventListener('submit', saveConsulta);
+        });
+
+    </script>
+</body>
+</html>
