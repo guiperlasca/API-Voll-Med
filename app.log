@@ -1,0 +1,176 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ----------------------------< med.voll:api >----------------------------
+[INFO] Building api 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] >>> spring-boot:3.5.4:run (default-cli) > test-compile @ api >>>
+[INFO]
+[INFO] --- resources:3.3.1:resources (default-resources) @ api ---
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] Copying 6 resources from src/main/resources to target/classes
+[INFO]
+[INFO] --- compiler:3.14.0:compile (default-compile) @ api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 43 source files with javac [debug parameters release 21] to target/classes
+[INFO]
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ api ---
+[INFO] skip non existing resourceDirectory /app/src/test/resources
+[INFO]
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug parameters release 21] to target/test-classes
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[44,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[44,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[44,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[44,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[44,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[48,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[48,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[48,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[48,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[48,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[51,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[51,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[51,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[51,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[WARNING] /app/src/test/java/med/voll/api/controller/ConsultaControllerTest.java:[51,6] org.springframework.boot.test.mock.mockito.MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal
+[INFO]
+[INFO] <<< spring-boot:3.5.4:run (default-cli) < test-compile @ api <<<
+[INFO]
+[INFO]
+[INFO] --- spring-boot:3.5.4:run (default-cli) @ api ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.4)
+
+2025-09-16T20:59:32.564Z  INFO 4957 --- [  restartedMain] med.voll.api.ApiApplication              : Starting ApiApplication using Java 21.0.8 with PID 4957 (/app/target/classes started by jules in /app)
+2025-09-16T20:59:32.567Z  INFO 4957 --- [  restartedMain] med.voll.api.ApiApplication              : No active profile set, falling back to 1 default profile: "default"
+2025-09-16T20:59:32.621Z  INFO 4957 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-09-16T20:59:32.621Z  INFO 4957 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-09-16T20:59:33.651Z  INFO 4957 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-16T20:59:33.734Z  INFO 4957 --- [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 4 JPA repository interfaces.
+2025-09-16T20:59:34.399Z  INFO 4957 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-09-16T20:59:34.415Z  INFO 4957 --- [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-16T20:59:34.415Z  INFO 4957 --- [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-09-16T20:59:34.464Z  INFO 4957 --- [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-09-16T20:59:34.465Z  INFO 4957 --- [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1843 ms
+2025-09-16T20:59:34.700Z  INFO 4957 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-09-16T20:59:34.950Z  INFO 4957 --- [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:vollmed_api user=SA
+2025-09-16T20:59:34.953Z  INFO 4957 --- [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-09-16T20:59:35.023Z  INFO 4957 --- [  restartedMain] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:mem:vollmed_api (H2 2.3)
+2025-09-16T20:59:35.066Z  INFO 4957 --- [  restartedMain] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
+2025-09-16T20:59:35.069Z  INFO 4957 --- [  restartedMain] o.f.core.internal.command.DbValidate     : Successfully validated 6 migrations (execution time 00:00.019s)
+2025-09-16T20:59:35.078Z  INFO 4957 --- [  restartedMain] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+2025-09-16T20:59:35.126Z  INFO 4957 --- [  restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": << Empty Schema >>
+2025-09-16T20:59:35.135Z  INFO 4957 --- [  restartedMain] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "1 - create-table-medicos"
+2025-09-16T20:59:35.156Z  INFO 4957 --- [  restartedMain] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "2 - alter-table-medicos-add-column-telefone"
+2025-09-16T20:59:35.173Z  INFO 4957 --- [  restartedMain] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "3 - alter-table-medicos-add-column-ativo"
+2025-09-16T20:59:35.189Z  INFO 4957 --- [  restartedMain] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "4 - create-table-pacientes"
+2025-09-16T20:59:35.197Z  INFO 4957 --- [  restartedMain] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "5 - create-table-usuarios"
+2025-09-16T20:59:35.204Z  INFO 4957 --- [  restartedMain] o.f.core.internal.command.DbMigrate      : Migrating schema "PUBLIC" to version "6 - create-table-consultas"
+2025-09-16T20:59:35.219Z  INFO 4957 --- [  restartedMain] o.f.core.internal.command.DbMigrate      : Successfully applied 6 migrations to schema "PUBLIC", now at version v6 (execution time 00:00.043s)
+2025-09-16T20:59:35.343Z  INFO 4957 --- [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-16T20:59:35.413Z  INFO 4957 --- [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.22.Final
+2025-09-16T20:59:35.461Z  INFO 4957 --- [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-09-16T20:59:35.815Z  INFO 4957 --- [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-16T20:59:35.944Z  INFO 4957 --- [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-09-16T20:59:37.681Z  INFO 4957 --- [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate:
+    alter table if exists medicos
+       alter column ativo set data type boolean
+Hibernate:
+    alter table if exists medicos
+       alter column crm set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column email set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column bairro set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column cep set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column cidade set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column complemento set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column logradouro set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column numero set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column uf set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column nome set data type varchar(255)
+Hibernate:
+    alter table if exists medicos
+       alter column telefone set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column ativo set data type boolean
+Hibernate:
+    alter table if exists pacientes
+       alter column cpf set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column email set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column bairro set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column cep set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column cidade set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column complemento set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column logradouro set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column numero set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column uf set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column nome set data type varchar(255)
+Hibernate:
+    alter table if exists pacientes
+       alter column telefone set data type varchar(255)
+Hibernate:
+    alter table if exists usuarios
+       alter column login set data type varchar(255)
+2025-09-16T20:59:37.777Z  INFO 4957 --- [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-16T20:59:38.392Z  INFO 4957 --- [  restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name autenticacaoService
+2025-09-16T20:59:38.505Z  INFO 4957 --- [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-09-16T20:59:39.426Z  WARN 4957 --- [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-16T20:59:40.148Z  INFO 4957 --- [  restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:vollmed_api'
+2025-09-16T20:59:40.209Z  INFO 4957 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-09-16T20:59:40.246Z  INFO 4957 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-09-16T20:59:40.259Z  INFO 4957 --- [  restartedMain] med.voll.api.ApiApplication              : Started ApiApplication in 8.13 seconds (process running for 8.569)

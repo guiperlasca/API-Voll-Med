@@ -52,6 +52,17 @@
             padding: 20px;
         }
 
+        .toggle-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .toggle-form a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
         .login-card {
             background: var(--light-bg);
             padding: 60px 40px;
@@ -587,6 +598,34 @@
             <div id="loginError" class="alert alert-error" style="display: none;">
                 <i class="fas fa-exclamation-circle"></i>
                 <span></span>
+            </div>
+
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label for="registerLogin">Usuário</label>
+                    <input type="text" id="registerLogin" name="login" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerSenha">Senha</label>
+                    <input type="password" id="registerSenha" name="senha" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmarSenha">Confirmar Senha</label>
+                    <input type="password" id="confirmarSenha" name="confirmarSenha" required>
+                </div>
+                <button type="submit" class="btn">
+                    <span class="btn-text">Cadastrar</span>
+                    <div class="loading" style="display: none;"></div>
+                </button>
+            </form>
+            <div id="registerError" class="alert alert-error" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <span></span>
+            </div>
+
+            <div class="toggle-form">
+                <a href="#" id="showRegister">Não tem uma conta? Cadastre-se</a>
+                <a href="#" id="showLogin" style="display: none;">Já tem uma conta? Faça o login</a>
             </div>
         </div>
     </div>
@@ -1268,6 +1307,62 @@
             document.getElementById('loginScreen').style.display = 'block';
             document.getElementById('dashboard').classList.remove('active');
             document.getElementById('loginError').style.display = 'none';
+            document.getElementById('registerError').style.display = 'none';
+        }
+
+        async function register(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const login = formData.get('login');
+            const senha = formData.get('senha');
+            const confirmarSenha = formData.get('confirmarSenha');
+
+            const errorDiv = document.getElementById('registerError');
+
+            if (senha !== confirmarSenha) {
+                errorDiv.querySelector('span').textContent = 'As senhas não coincidem.';
+                errorDiv.style.display = 'flex';
+                return;
+            }
+
+            const registerData = { login, senha };
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loading = submitBtn.querySelector('.loading');
+
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            errorDiv.style.display = 'none';
+
+            try {
+                // Using fetch directly as makeRequest expects a token by default
+                const response = await fetch(`${API_BASE_URL}/cadastrar`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(registerData)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText || `HTTP error! status: ${response.status}`);
+                }
+
+                showAlert('Cadastro realizado com sucesso! Faça o login para continuar.', 'success');
+                document.getElementById('showLogin').click();
+                form.reset();
+
+            } catch (error) {
+                errorDiv.querySelector('span').textContent = error.message || 'Erro ao cadastrar. Tente novamente.';
+                errorDiv.style.display = 'flex';
+            } finally {
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+            }
         }
 
         // Dashboard Functions
@@ -1891,9 +1986,31 @@
             }
 
             document.getElementById('loginForm').addEventListener('submit', login);
+            document.getElementById('registerForm').addEventListener('submit', register);
             document.getElementById('medicoForm').addEventListener('submit', saveMedico);
             document.getElementById('pacienteForm').addEventListener('submit', savePaciente);
             document.getElementById('consultaForm').addEventListener('submit', saveConsulta);
+
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const showRegister = document.getElementById('showRegister');
+            const showLogin = document.getElementById('showLogin');
+
+            showRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                showRegister.style.display = 'none';
+                showLogin.style.display = 'block';
+            });
+
+            showLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                showRegister.style.display = 'block';
+                showLogin.style.display = 'none';
+            });
         });
 
     </script>
